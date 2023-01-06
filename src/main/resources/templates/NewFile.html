@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Sending Mail</title>
+<script src="https://smtpjs.com/v3/smtp.js"></script>
+<script type="text/javascript">
+    function sendEmail() {
+    	var e1=document.getElementById("Email").value
+    	var mails=document.getElementById("customerMails").value
+    	alert(mails)
+    	 const arr=mails.split(",");
+    	alert(arr[0])
+    	var condition=false
+    	for(let i=0;i<arr.length;i++){
+    		
+    		var check=arr[i]
+    		if(check==e1){
+				condition=true
+				
+			}
+    	}  
+    	if(condition==true){
+    		
+			var otp = Math.random()*100000
+			
+			if (otp < 100000) {
+				otp = otp + 100000;
+			}
+			var subject = "Multikart Account - " + otp + " is your verification code for secure access ";
+			var body = "Hi, " + " Greetings! "
+					+ " You are just a step away from accessing your MULTIKART account"
+					+ " We are sharing a verification code to access your account " + " Your OTP : " + otp
+					+ " Best Regards , Team Multikart."
+					
+					Email.send({
+						SecureToken : "d01384a4-fc28-4ab2-a251-140ec0ab3632",
+						Password : "snxzurljfgzzgsrd",
+						To :document.getElementById("Email").value,
+						From :"multikartonline@gmail.com",
+						Subject : "Multikart Account - " + otp + " is your verification code for secure access ",
+						Body : "Hi, " + " Greetings! "
+						+ " You are just a step away from accessing your MULTIKART account"
+						+ " We are sharing a verification code to access your account " + " Your OTP : " + otp
+						+ " Best Regards , Team Multikart."
+					})
+					
+					.then(function(message){
+						alert("mail sent successfully")
+					});
+			sendtoEmail( e1,subject, body)
+					
+		} 
+    }
+  </script>
+	<script type="text/javascript">
+	function sendtoEmail(var e1,var subject,var body) {
+		Email.send({
+			Host: "smtp.gmail.com",
+			Username : "multikartonline@gmail.com",
+			Password : "snxzurljfgzzgsrd",
+			To :e1,
+			From :"multikartonline@gmail.com",
+			Subject : subject,
+			Body :body,
+		})
+		
+		.then(function(message){
+			alert("mail sent successfully")
+		});
+	}
+</script>
+</head>
+
+<body>
+
+
+	<form class="theme-form">
+
+		<div class="form-group">
+			<label for="email">Email</label> <input type="text"
+				class="form-control" id="Email" placeholder="Email" required=""
+				name="email"  >
+				<input type="text" id="customerMails" name="customerMails" th:value="${customerMails}">
+		</div>
+
+		<input type="button" value="Send Mail" onclick="sendEmail()" />
+
+
+	</form>
+
+	<div class="form-group">
+		<br> <a class="btn btn-solid" th:href="@{/forgotpassword}">Forgot
+			Password</a>
+	</div>
+	
+</body>
+
+</html>
